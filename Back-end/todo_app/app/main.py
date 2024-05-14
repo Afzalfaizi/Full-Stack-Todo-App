@@ -1,6 +1,10 @@
 from fastapi import FastAPI
-from sqlmodel import SQLModel, Field, create_engine, Session, select
 import uvicorn
+from sqlmodel import SQLModel, Field, Session, select
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 app = FastAPI()
 
