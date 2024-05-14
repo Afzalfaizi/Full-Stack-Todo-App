@@ -11,7 +11,6 @@ class Todo(SQLModel, table=True):
     description: str
     email: str 
     
-
 @app.get("/getTodos")
 def getTodos():
     with Session(engine) as session:
