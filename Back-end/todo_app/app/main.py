@@ -6,7 +6,7 @@ app = FastAPI()
 
 connection_string = 'postgresql://postgres.lbmuulohpxlzgumdqzao:Ifltp3*789258@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres'
 engine = create_engine(connection_string)
-class Users(SQLModel, table=True):
+class Todo(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     name: str = Field(default=None)
     description: str
