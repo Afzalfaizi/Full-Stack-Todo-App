@@ -2,7 +2,7 @@ from fastapi import FastAPI
 import uvicorn
 from sqlmodel import  Session, select
 from dotenv import load_dotenv
-from .config.db import create_Tables, engine
+from .config.db import  engine, create_Tables
 from .models.todos import Todo
 
 load_dotenv()
@@ -17,9 +17,16 @@ def getTodos():
         print(data)
         return 
 
-@app.post("/todos")
-def todos():
-    return todos
-
+@app.post("/create_todo")
+def create_todos(todo: Todo):
+    with Session(engine) as session:
+        session.add(todo)
+        session.commit()
+        session.refresh(todo)
+        return {"Status":200, "Message": "Todo Created Successfully"}
+    
 create_Tables()
 
+# def start():
+    
+    # uvicorn.run("app.main:app", host="127.0.0.1", port=8080, reload=True)
