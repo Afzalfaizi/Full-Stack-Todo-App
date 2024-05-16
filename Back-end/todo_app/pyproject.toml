@@ -11,9 +11,11 @@ uvicorn = {extras = ["standart"], version = "^0.29.0"}
 fastapi = "^0.111.0"
 sqlmodel = "^0.0.18"
 python-dotenv = "^1.0.1"
+sqlalchemy = "^2.0.30"
 
 [tool.poetry.scripts]
-dev= "app.main:start"
+dev= "app.main:app"
+
 
 
 

@@ -1,11 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from sqlmodel import Session, select
 import uvicorn
 from dotenv import load_dotenv
-from .config.db import create_tables, engine
-from .models.todos import Todo, UpdateTodo
-
 load_dotenv()
+
+from .models.todos import Todo, UpdateTodo
+from .config.db import create_tables, engine
 
 app = FastAPI()
 
@@ -30,7 +30,26 @@ def create_todo(todo: Todo):
 def update_tod(todo: UpdateTodo):
     with Session(engine) as session: 
         db_todo = session.get(Todo, id)
-    
+        if not db_todo:
+            raise HTTPException(status_code=404, detail="Todo not found") 
+        todo_data = todo.model_dump(exclude_unset=True)
+        db_todo.sqlmodel_update(todo_data)
+        session.add(db_todo)
+        session.commit()
+        session.refresh(db_todo)
+        return {"Status":200, "Message": "Todo updated Successfully"}
+
+@app.delete("/delete_todo/{id}")
+def delete_todo(id: int):
+    with Session(engine) as session:
+        db_todo = session.get(Todo, id)
+        if not db_todo:
+            raise HTTPException(status_code=404, detail="Todo not found") 
+        session.delete(db_todo)
+        session.commit()
+        session.refresh() 
+        return {"Status":200, "Message": "Todo deleted Successfully"}
 def start():
     create_tables()
     uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
+    
