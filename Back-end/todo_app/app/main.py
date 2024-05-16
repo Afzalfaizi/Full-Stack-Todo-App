@@ -40,7 +40,7 @@ def update_todo(id:int, todo: UpdateTodo):
         return {"Status":200, "Message": "Todo updated Successfully"}
 
 @app.delete("/delete_todo/{todo_id}")
-def delete_todo(id: int):
+def delete_todo(todo_id: int):
     with Session(engine) as session:
         db_todo = session.get(Todo, todo_id)
         if not db_todo:
