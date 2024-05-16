@@ -27,7 +27,7 @@ def create_todo(todo: Todo):
         return {"Status":200, "Message": "Todo Created Successfully"}
 
 @app.put("/update_todo/{id}")
-def update_tod(todo: UpdateTodo):
+def update_todo(id:int, todo: UpdateTodo):
     with Session(engine) as session: 
         db_todo = session.get(Todo, id)
         if not db_todo:
@@ -39,15 +39,13 @@ def update_tod(todo: UpdateTodo):
         session.refresh(db_todo)
         return {"Status":200, "Message": "Todo updated Successfully"}
 
-@app.delete("/delete_todo/{id}")
+@app.delete("/delete_todo/{todo_id}")
 def delete_todo(id: int):
     with Session(engine) as session:
-        db_todo = session.get(Todo, id)
+        db_todo = session.get(Todo, todo_id)
         if not db_todo:
             raise HTTPException(status_code=404, detail="Todo not found") 
         session.delete(db_todo)
-        session.commit()
-        session.refresh() 
         return {"Status":200, "Message": "Todo deleted Successfully"}
     
 def start():
