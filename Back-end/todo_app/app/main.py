@@ -1,32 +1,36 @@
 from fastapi import FastAPI
+from sqlmodel import Session, select
 import uvicorn
-from sqlmodel import  Session, select
 from dotenv import load_dotenv
-from .config.db import  engine, create_Tables
-from .models.todos import Todo
+from .config.db import create_tables, engine
+from .models.todos import Todo, UpdateTodo
 
 load_dotenv()
+
 app = FastAPI()
 
-@app.get("/get_Todos")
+@app.get("/getTodos")
 def getTodos():
     with Session(engine) as session:
         statement = select(Todo)
         results = session.exec(statement)
         data = results.all()
         print(data)
-        return 
+        return data
 
 @app.post("/create_todo")
-def create_todos(todo: Todo):
+def create_todo(todo: Todo):
     with Session(engine) as session:
         session.add(todo)
         session.commit()
         session.refresh(todo)
         return {"Status":200, "Message": "Todo Created Successfully"}
-    
-create_Tables()
 
-# def start():
+@app.put("/update_todo/{id}")
+def update_tod(todo: UpdateTodo):
+    with Session(engine) as session: 
+        db_todo = session.get(Todo, id)
     
-    # uvicorn.run("app.main:app", host="127.0.0.1", port=8080, reload=True)
+def start():
+    create_tables()
+    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)

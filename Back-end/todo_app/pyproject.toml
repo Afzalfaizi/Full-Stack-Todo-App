@@ -12,9 +12,9 @@ fastapi = "^0.111.0"
 sqlmodel = "^0.0.18"
 python-dotenv = "^1.0.1"
 
-
 [tool.poetry.scripts]
 dev= "app.main:start"
+
 
 
 [build-system]
