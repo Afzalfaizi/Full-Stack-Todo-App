@@ -1,6 +1,9 @@
 
 export default function AddTask() {
   return (
-    <div>AddTask</div>
+    <form>
+        <input/>
+        <button>Save</button>
+    </form>
   )
 }
