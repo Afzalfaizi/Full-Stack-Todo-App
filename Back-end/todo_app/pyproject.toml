@@ -14,7 +14,7 @@ python-dotenv = "^1.0.1"
 sqlalchemy = "^2.0.30"
 
 [tool.poetry.scripts]
-dev= "app.main:app"
+dev= "app.main:start"
 
 
 

@@ -49,7 +49,8 @@ def delete_todo(id: int):
         session.commit()
         session.refresh() 
         return {"Status":200, "Message": "Todo deleted Successfully"}
+    
 def start():
     create_tables()
-    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="127.0.0.1", port=8080, reload=True)
     
