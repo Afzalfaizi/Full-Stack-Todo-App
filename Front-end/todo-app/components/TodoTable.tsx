@@ -3,30 +3,10 @@ import Task from "./Task";
 import { Todo } from "@/type";
 
 
-const todo_list: Todo[] = [
-  {
-    id: 1,
-    name: "Task 1",
-    description: "Full Stack Developer",
-    email: "afzaalm993@gmail.com",
-    is_Completed: false,
-  },
-  {
-    id: 2,
-    name: "Task 2",
-    description: "Full Stack Developer",
-    email: "task2@gmail.com",
-    is_Completed: false,
-  },
-  {
-    id: 3,
-    name: "Task 3",
-    description: "Full Stack Developer",
-    email: "task3@gmail.com",
-    is_Completed: false,
-  },
-];
-export default function TodoTable() {
+
+export default async function TodoTable() {
+  const response = await fetch('http://127.0.0.1:8080/getTodos')
+  const  todo_list : Todo[] = await response.json()
   return (
     <table className=" w-full">
       <thead>
@@ -37,7 +17,7 @@ export default function TodoTable() {
       </thead>
       <tbody>
         {
-            todo_list.map((task) => (
+            todo_list.map((task:Todo) => (
                           <Task key={task.id} task={task} />
                         ))
         }
