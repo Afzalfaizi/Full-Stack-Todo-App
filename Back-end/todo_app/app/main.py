@@ -9,6 +9,10 @@ from .config.db import create_tables, engine
 
 app = FastAPI()
 
+@app.get("/")
+def mainRoute():
+    return {"Status":200, "Message": "Welcome to the Todo App"}
+
 @app.get("/getTodos")
 def getTodos():
     with Session(engine) as session:
