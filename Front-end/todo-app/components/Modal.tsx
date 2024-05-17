@@ -10,7 +10,8 @@ import AddTask from "./AddTask"
 import { Children } from "react"
 import EditTask from "./EditTask"
 
-export function Modal({children, title}:{children:React.ReactNode, title:string}) {
+export function Modal({children, title, Adding, Editing}:{children:React.ReactNode, title:string,
+   Adding?:boolean, Editing?:boolean}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -20,8 +21,8 @@ export function Modal({children, title}:{children:React.ReactNode, title:string}
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <AddTask/>
-        <EditTask/>
+        {Adding && <AddTask/>}
+        {Editing && <EditTask/>}
       </DialogContent>
     </Dialog>
   )

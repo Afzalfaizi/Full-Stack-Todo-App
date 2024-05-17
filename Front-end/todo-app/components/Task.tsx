@@ -14,7 +14,7 @@ export default function Task({task}:{task:Todo}) {
       <ToolTip tool_tip_content="Mark as completed">
       <CiSquareCheck size={28} className={`${task.is_Completed ? "text-green-500" : "text-gray-300"}`} />
       </ToolTip>
-      <Modal title="Edit Task">
+      <Modal title="Edit Task" Editing={true}>
       <FiEdit size={24} className=" text-blue-500"/>
       </Modal>
 
