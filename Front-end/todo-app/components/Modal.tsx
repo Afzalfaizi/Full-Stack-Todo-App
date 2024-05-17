@@ -12,7 +12,7 @@ export function Modal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Task</Button>
+        <Button variant="default" className=" w-full bg-teal-600 px-2 py-1 text-white uppercase text-lg ">Add Task</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

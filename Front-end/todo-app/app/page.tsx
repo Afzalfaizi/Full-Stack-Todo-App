@@ -1,15 +1,16 @@
 import { Modal } from "@/components/Modal";
-import Image from "next/image";
+import TodoTable from "@/components/TodoTable";
 
 export default function Home() {
   return (
-    <main className=" max-w-5xl mx-auto">
+    <main className=" max-w-5xl mx-auto mt-8">
       {/* Add Task Section */}
       <section>
         <Modal/>
       </section>
-
-      <section>
+      {/* Todo Table */}
+      <section className=" mt-4">
+        <TodoTable/>
 
       </section>
       
