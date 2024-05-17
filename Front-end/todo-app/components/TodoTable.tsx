@@ -1,26 +1,29 @@
 import { table } from "console";
+import Task from "./Task";
+import { Todo } from "@/type";
 
-const todo_list = [
+
+const todo_list: Todo[] = [
   {
     id: 1,
     name: "Task 1",
     description: "Full Stack Developer",
     email: "afzaalm993@gmail.com",
-    is_completed: false,
+    is_Completed: false,
   },
   {
     id: 2,
     name: "Task 2",
     description: "Full Stack Developer",
     email: "task2@gmail.com",
-    is_completed: false,
+    is_Completed: false,
   },
   {
     id: 3,
     name: "Task 3",
     description: "Full Stack Developer",
     email: "task3@gmail.com",
-    is_completed: false,
+    is_Completed: false,
   },
 ];
 export default function TodoTable() {
@@ -32,7 +35,13 @@ export default function TodoTable() {
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        {
+            todo_list.map((task) => (
+                          <Task key={task.id} task={task} />
+                        ))
+        }
+      </tbody>
     </table>
   );
 }
