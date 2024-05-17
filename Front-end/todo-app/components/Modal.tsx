@@ -7,16 +7,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import AddTask from "./AddTask"
+import { Children } from "react"
 
-export function Modal() {
+export function Modal({children, title}:{children:React.ReactNode, title:string}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default" className=" w-full bg-teal-600 px-2 py-1 text-white uppercase text-lg ">Add Task</Button>
+        {children}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add New Task</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <AddTask/>
     
