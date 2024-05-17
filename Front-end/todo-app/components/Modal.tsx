@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog"
 import AddTask from "./AddTask"
 import { Children } from "react"
+import EditTask from "./EditTask"
 
 export function Modal({children, title}:{children:React.ReactNode, title:string}) {
   return (
@@ -20,7 +21,7 @@ export function Modal({children, title}:{children:React.ReactNode, title:string}
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <AddTask/>
-    
+        <EditTask/>
       </DialogContent>
     </Dialog>
   )
