@@ -4,6 +4,8 @@ import { useFormState } from "react-dom";
 import { useEffect } from "react";
 import { useRef } from "react";
 import toast from "react-hot-toast";
+import SubmitButton from "./submitButton";
+
 
 
 
@@ -34,7 +36,7 @@ export default function AddTask() {
         name="Add_Task"
         className=" w-full px-2 py-1 border border-gray-100 rounded-md"
       />
-      <button className=" px-2 py-1 bg-teal-600 text-white rounded-md w-full mt-4">Save</button>
+      <SubmitButton/>      
     </form>
   );
 }
