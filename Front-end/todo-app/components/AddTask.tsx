@@ -1,11 +1,10 @@
 'use client'
-import { add_todo } from "@/app/actions";
+import { add_todo } from "@/actions";
 import { useFormState } from "react-dom";
 import { useEffect } from "react";
 import { useRef } from "react";
 import toast from "react-hot-toast";
-import SubmitButton from "./submitButton";
-
+import SubmitButton from "./SubmitButton";
 
 
 
@@ -36,7 +35,8 @@ export default function AddTask() {
         name="Add_Task"
         className=" w-full px-2 py-1 border border-gray-100 rounded-md"
       />
-      <SubmitButton/>      
+      
+      <SubmitButton/>
     </form>
   );
 }

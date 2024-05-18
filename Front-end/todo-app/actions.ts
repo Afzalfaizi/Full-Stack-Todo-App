@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 
 // Add Todo Function
 export async function add_todo(
-  state: {status: string; message: string },
+  state: { status: string; message: string },
   formData: FormData
 ) {
   const new_todo = formData.get("add_task") as string;
@@ -15,9 +15,9 @@ export async function add_todo(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({task: new_todo,})
+      body: JSON.stringify({ task: new_todo }),
     });
-    revalidatePath('/create_todo/')
+    revalidatePath("/create_todo/");
     return { status: "success", message: "Todo added successfully" };
   } catch (error) {
     return { status: "error", message: "Something went wrong" };

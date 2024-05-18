@@ -5,8 +5,11 @@ import { Todo } from "@/type";
 
 
 export default async function TodoTable() {
-  const response = await fetch('http://127.0.0.1:8080/getTodos')
-  const  todo_list : Todo[] = await response.json()
+  const response = await fetch('http://127.0.0.1:8080/getTodos',{
+        cache: 'no-store'
+    })
+    const data = await response.json()
+    const todo_list : Todo[] = data.sort((a:Todo,b:Todo)=>a.id - b.id)
   return (
     <table className=" w-full">
       <thead>
