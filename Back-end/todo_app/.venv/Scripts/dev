@@ -1,0 +1,6 @@
+#!D:\Full Stack Todo App\Back-end\todo_app\.venv\Scripts\python.exe
+import sys
+from app.main import start
+
+if __name__ == '__main__':
+    sys.exit(start())

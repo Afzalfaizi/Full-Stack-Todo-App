@@ -12,6 +12,7 @@ fastapi = "^0.111.0"
 sqlmodel = "^0.0.18"
 python-dotenv = "^1.0.1"
 sqlalchemy = "^2.0.30"
+psycopg2 = "^2.9.9"
 
 [tool.poetry.scripts]
 dev= "app.main:start"
