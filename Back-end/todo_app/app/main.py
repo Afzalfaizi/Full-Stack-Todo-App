@@ -3,11 +3,14 @@ from sqlmodel import Session, select
 import uvicorn
 from dotenv import load_dotenv
 load_dotenv()
+from app.router import user
 
 from .models.todos import Todo, UpdateTodo
 from .config.db import create_tables, engine
 
 app = FastAPI()
+
+app.include_router(router=user.user_router)
 
 @app.get("/")
 def mainRoute():
