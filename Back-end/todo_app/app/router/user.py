@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends
 from typing import Annotated
-from todo_app.models import Register_User
-
+from app.models.todos import Register_User
 
 user_router = APIRouter(
     prefix ="/user",

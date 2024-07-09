@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 from app.router import user
 
-from .models.todos import Todo, UpdateTodo
+from .models.todos import Todo, UpdateTodo, Register_User
 from .config.db import create_tables, engine
 
 app = FastAPI()

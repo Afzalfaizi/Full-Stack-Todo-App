@@ -13,6 +13,7 @@ sqlmodel = "^0.0.18"
 python-dotenv = "^1.0.1"
 sqlalchemy = "^2.0.30"
 psycopg2 = "^2.9.9"
+python-multipart = "^0.0.9"
 
 [tool.poetry.scripts]
 dev= "app.main:start"

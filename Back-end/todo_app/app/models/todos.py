@@ -11,13 +11,14 @@ class Todo(SQLModel, table=True):
     description: str
     email: str 
     is_Completed: bool
-    user_id:int = Field1(foreign_key="user.id")
+    user_id:int = Field(foreign_key="user.id")
 
-# class UpdateTodo(SQLModel):
-#     name: str = Field(default=None)
-#     description: str | None
-#     email: str | None
-#     is_Completed: bool | None
+class UpdateTodo(SQLModel):
+    name: str = Field(default=None)
+    description: str | None
+    email: str | None
+    is_Completed: bool | None
+    
 class User (SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     username:str
