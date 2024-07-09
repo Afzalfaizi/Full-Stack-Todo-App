@@ -14,7 +14,7 @@ app.include_router(router=user.user_router)
 
 @app.get("/")
 def mainRoute():
-    return {"Status":200, "Message": "Welcome to the Todo App"}
+    return {"Status":200, "Message": "Welcome to Zia Online Mart"}
 
 @app.get("/getTodos")
 def getTodos():

@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from typing import Annotated
+from todo_app.models import Register_User
 
 
 user_router = APIRouter(
@@ -12,5 +14,5 @@ async def read_user():
     return {"message": "Welcome to Imtiaz Mart User Page"}
 
 @user_router.post("/register")
-async def register_user():
-    return {"message":"Register your Account"}
+async def register_user(form_data:Annotated[Register_User, Depends()]):
+    pass
