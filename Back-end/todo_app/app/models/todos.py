@@ -2,6 +2,7 @@ from sqlmodel import SQLModel, Field
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 from fastapi import Form
+from pydantic import BaseModel
 
 
 
@@ -25,9 +26,18 @@ class User (SQLModel, table=True):
     email: str
     password: str
 
-class Register_User(OAuth2PasswordRequestForm):
+class Register_User(BaseModel):
+        username: Annotated[
+            str,
+            Form(),
+        ]
         email: Annotated[
             str,
             Form(),
         ]
+        password: Annotated[
+            str,
+            Form(),
+        ]
+
 
