@@ -5,3 +5,7 @@ from todo_app.db import get_session
 from fastapi import Depends
 
 pwd_context = CryptContext(schemes="bcrypt", deprecated = "auto")
+
+def hash_password(password):
+    return pwd_context.hash(password)
+    
