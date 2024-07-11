@@ -4,6 +4,9 @@ from typing import Annotated
 from app.config.db import get_session
 from fastapi import Depends
 from app.models.todos import User, Todo
+from fastapi.security import OAuth2PasswordBearer
+
+oauth_scheme = OAuth2PasswordBearer(tokenUrl = "/token")
 
 pwd_context = CryptContext(schemes="bcrypt", deprecated = "auto")
 
