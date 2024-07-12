@@ -47,3 +47,4 @@ def create_access_token(data:dict, expiry_time:timedelta|None):
         expire = datetime.now(timezone.utc) + expiry_time
     else:
         expire = datetime.now(timezone.utc) + timedelta(minutes=15)
+    data_to_encode.update({"exp": expire})
