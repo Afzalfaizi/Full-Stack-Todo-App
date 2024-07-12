@@ -1,9 +1,11 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from sqlmodel import Session, select
 import uvicorn
 from dotenv import load_dotenv
 load_dotenv()
 from app.router import user
+from typing import Annotated
+from fastapi.security import OAuth2PasswordRequestForm
 
 from .models.todos import Todo, UpdateTodo, Register_User
 from .config.db import create_tables, engine
@@ -59,3 +61,7 @@ def start():
     create_tables()
     uvicorn.run("app.main:app", host="127.0.0.1", port=8080, reload=True)
     
+# login
+@app.post("/token")
+async def login(from_data:Annotated[OAuth2PasswordRequestForm, Depends()]):
+    pass
