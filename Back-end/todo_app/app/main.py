@@ -6,6 +6,9 @@ load_dotenv()
 from app.router import user
 from typing import Annotated
 from fastapi.security import OAuth2PasswordRequestForm
+from .auth import authenticate_user
+from app.config.db import get_session
+from .auth import create_access_token
 
 from .models.todos import Todo, UpdateTodo, Register_User
 from .config.db import create_tables, engine
@@ -63,5 +66,10 @@ def start():
     
 # login
 @app.post("/token")
-async def login(from_data:Annotated[OAuth2PasswordRequestForm, Depends()]):
-    pass
+async def login(form_data:Annotated[OAuth2PasswordRequestForm, Depends()],
+                session:Annotated[Session, Depends(get_session)]):
+    user =  authenticate_user(form_data.username, form_data.password, session)
+    if not user:
+        raise HTTPException(status_code=401, detail="Incorrect username or password")
+    # access_token = create_access_token(form_data.username)
+    return user

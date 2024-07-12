@@ -5,6 +5,12 @@ from app.config.db import get_session
 from fastapi import Depends
 from app.models.todos import User, Todo
 from fastapi.security import OAuth2PasswordBearer
+from jose import jwt, JWTError
+from datetime import datetime, timezone, timedelta
+
+SECRET_KEY = '9980b505fb4aca80beca586aec55f4bb73bfac5e8c16f821bdea06445d75680c'
+ALGORITHM = 'HS256'
+EXPIRY_TIME = 30
 
 oauth_scheme = OAuth2PasswordBearer(tokenUrl = "/token")
 
@@ -31,6 +37,9 @@ def authenticate_user (username, email, password, session:Annotated[Session, Dep
     db_user = get_user_from_db(session, username = username, email=email )
     if not db_user:
         return False
-if not verify_password(password=password, hash_password=db_user.password):
-    return False
-return db_user
+    if not verify_password(password=password, hash_password=db_user.password):
+        return False
+    return db_user
+
+def create_access_token():
+    pass
