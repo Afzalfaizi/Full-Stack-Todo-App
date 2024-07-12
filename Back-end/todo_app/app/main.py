@@ -9,8 +9,9 @@ from fastapi.security import OAuth2PasswordRequestForm
 from .auth import authenticate_user
 from app.config.db import get_session
 from .auth import create_access_token
-from datetime import datetime
+from datetime import datetime, timedelta ,timezone
 from .models.todos import Token
+from .models.todos import User
 
 from .models.todos import Todo, UpdateTodo, Register_User
 from .config.db import create_tables, engine
@@ -70,7 +71,7 @@ def start():
 @app.post("/token", response_model= Token)
 async def login(form_data:Annotated[OAuth2PasswordRequestForm, Depends()],
                 session:Annotated[Session, Depends(get_session)]):
-    user =  authenticate_user(form_data.username, form_data.password, session)
+    user =  authenticate_user(form_data.username, form_data.password,session)
     if not user:
         raise HTTPException(status_code=401, detail="Incorrect username or password")
 

@@ -32,4 +32,4 @@ async def register_user(new_user:Annotated[Register_User, Depends()],
 
 @user_router.get('/me')
 async def user_prfoile(current_user:Annotated[User, Depends(oauth_scheme)]):
-    return {"message": "Welcome to Imtiaz Mart User Page"}
+    return {"message": "Welcome to Zia Online Mart User Page"}
