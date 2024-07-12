@@ -9,6 +9,8 @@ from fastapi.security import OAuth2PasswordRequestForm
 from .auth import authenticate_user
 from app.config.db import get_session
 from .auth import create_access_token
+from datetime import datetime
+from .models.todos import Token
 
 from .models.todos import Todo, UpdateTodo, Register_User
 from .config.db import create_tables, engine
@@ -65,11 +67,13 @@ def start():
     uvicorn.run("app.main:app", host="127.0.0.1", port=8080, reload=True)
     
 # login
-@app.post("/token")
+@app.post("/token", response_model= Token)
 async def login(form_data:Annotated[OAuth2PasswordRequestForm, Depends()],
                 session:Annotated[Session, Depends(get_session)]):
     user =  authenticate_user(form_data.username, form_data.password, session)
     if not user:
         raise HTTPException(status_code=401, detail="Incorrect username or password")
-    # access_token = create_access_token(form_data.username)
-    return user
+
+    expire_time = timedelta(minutes= EXPIRY_TIME)
+    access_token = create_access_token({"sub":form_data.username}, expire_time)
+    return Token(access_token=access_token, token_type="bearer")

@@ -40,4 +40,8 @@ class Register_User(BaseModel):
             Form(),
         ]
 
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
 
