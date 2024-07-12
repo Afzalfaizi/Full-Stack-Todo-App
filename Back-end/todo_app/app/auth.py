@@ -41,5 +41,9 @@ def authenticate_user (username, email, password, session:Annotated[Session, Dep
         return False
     return db_user
 
-def create_access_token():
-    pass
+def create_access_token(data:dict, expiry_time:timedelta|None):
+    data_to_encode = data.copy()
+    if expiry_time:
+        expire = datetime.now(timezone.utc) + expiry_time
+    else:
+        expire = datetime.now(timezone.utc) + timedelta(minutes=15)
