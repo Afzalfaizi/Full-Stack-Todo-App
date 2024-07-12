@@ -12,6 +12,9 @@ pwd_context = CryptContext(schemes="bcrypt", deprecated = "auto")
 
 def hash_password(password):
     return pwd_context.hash(password)
+
+def verify_password(password, hash_password):
+    return pwd_context.verify(password, hash_password)
      
 def get_user_from_db(session:Annotated[Session, Depends(get_session)], username:str, email:str):
     statement = select(User).where(User.username == username)
@@ -23,3 +26,11 @@ def get_user_from_db(session:Annotated[Session, Depends(get_session)], username:
             return user
     
     return user
+
+def authenticate_user (username, email, password, session:Annotated[Session, Depends(get_session)]):
+    db_user = get_user_from_db(session, username = username, email=email )
+    if not db_user:
+        return False
+if not verify_password(password=password, hash_password=db_user.password):
+    return False
+return db_user
