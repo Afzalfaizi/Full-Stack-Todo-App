@@ -52,4 +52,19 @@ def create_access_token(data:dict, expiry_time:timedelta|None):
     return encoded_jwt
     
 def current_user (token:Annotated[str, Depends(oauth_scheme)], session:Annotated[Session, Depends(get_session)]):
-    pass
+    credential_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Invalid token, Please login again",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str | None = payload.get("sub")
+        if username is None:
+            raise credential_exception
+        token_data = TokenData(username=username)
+        return username
+    except:
+        raise JWTError
+    user = get_user_from_db(session, username=token_data.username)
