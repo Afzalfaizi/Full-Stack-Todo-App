@@ -44,5 +44,6 @@ class Token(BaseModel):
     access_token: str
     token_type: str
 
-class Token
+class TokenData(BaseModel):
+    username:str
 

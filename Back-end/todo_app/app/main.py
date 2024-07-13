@@ -8,7 +8,7 @@ from typing import Annotated
 from fastapi.security import OAuth2PasswordRequestForm
 from .auth import authenticate_user
 from app.config.db import get_session
-from .auth import create_access_token
+from .auth import create_access_token, current_user
 from datetime import datetime, timedelta ,timezone
 from .models.todos import Token
 from .models.todos import User
@@ -33,8 +33,10 @@ def getTodos():
         print(data)
         return data
 
-@app.post("/create_todo")
-def create_todo(todo: Todo):
+@app.post("/create_todo/", response_model=Todo)
+def create_todo(current_user:Annotated[User, Depends(current_user)],
+                todo: Todo,
+                session:Annotated [Session, Depends(get_session)]):
     with Session(engine) as session:
         session.add(todo)
         session.commit()
@@ -70,7 +72,7 @@ def start():
 # login
 @app.post("/token", response_model= Token)
 async def login(form_data:Annotated[OAuth2PasswordRequestForm, Depends()], session:Annotated[Session, Depends(get_session)]):            
-    user = authenticate_user(session)
+    user = authenticate_user(form_data.username, form_data.password, session)
     if not user:
         raise HTTPException(status_code=401, detail="Incorrect username or password")
 

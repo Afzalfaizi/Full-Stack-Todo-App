@@ -7,6 +7,7 @@ from app.models.todos import User, Todo
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
 from datetime import datetime, timezone, timedelta
+from app.models.todos import TokenData
 
 SECRET_KEY = '9980b505fb4aca80beca586aec55f4bb73bfac5e8c16f821bdea06445d75680c'
 ALGORITHM = 'HS256'
@@ -45,7 +46,7 @@ def create_access_token(data:dict, expiry_time:timedelta|None):
     data_to_encode = data.copy()
     if expiry_time:
         expire = datetime.now(timezone.utc) + expiry_time
-    else:
+    else: 
         expire = datetime.now(timezone.utc) + timedelta(minutes=15)
     data_to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(data_to_encode, SECRET_KEY, algorithm=ALGORITHM)
@@ -68,3 +69,6 @@ def current_user (token:Annotated[str, Depends(oauth_scheme)], session:Annotated
     except:
         raise JWTError
     user = get_user_from_db(session, username=token_data.username)
+    if not user:
+        raise credential_exception
+    return user

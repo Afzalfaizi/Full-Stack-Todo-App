@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from typing import Annotated
 from app.models.todos import Register_User, User
-from app.auth import get_user_from_db, hash_password, oauth_scheme
+from app.auth import get_user_from_db, hash_password, oauth_scheme, current_user
 from app.config.db import get_session
 from sqlmodel import Session
 
@@ -31,5 +31,5 @@ async def register_user(new_user:Annotated[Register_User, Depends()],
     return {"message": f"""user with {user.username} successfull register"""}
 
 @user_router.get('/me')
-async def user_prfoile(current_user:Annotated[User, Depends(oauth_scheme)]):
-    return {"message": "Welcome to Zia Online Mart User Page"}
+async def user_prfoile(current_user:Annotated[User, Depends(current_user)]):
+    return current_user
