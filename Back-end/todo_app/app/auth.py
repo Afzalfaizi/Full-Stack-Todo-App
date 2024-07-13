@@ -51,3 +51,5 @@ def create_access_token(data:dict, expiry_time:timedelta|None):
     encoded_jwt = jwt.encode(data_to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
     
+def current_user (token:Annotated[str, Depends(oauth_scheme)], session:Annotated[Session, Depends(get_session)]):
+    pass
