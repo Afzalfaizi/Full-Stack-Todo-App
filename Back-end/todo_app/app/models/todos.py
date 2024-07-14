@@ -47,3 +47,5 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     username:str
 
+class Todo_Create(BaseModel):
+    content: str = Field(index=True, min_length=3, max_length=54)

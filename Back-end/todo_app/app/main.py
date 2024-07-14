@@ -11,7 +11,7 @@ from app.config.db import get_session
 from .auth import create_access_token, current_user
 from datetime import datetime, timedelta ,timezone
 from .models.todos import Token
-from .models.todos import User
+from .models.todos import User, Todo_Create
 
 from .models.todos import Todo, UpdateTodo, Register_User
 from .config.db import create_tables, engine
@@ -34,9 +34,11 @@ def getTodos():
         return data
 
 @app.post("/create_todo/", response_model=Todo)
-def create_todo(current_user:Annotated[User, Depends(current_user)],
-                todo: Todo,
+async def create_todo(current_user:Annotated[User, Depends(current_user)],
+                todo: Todo_Create,
                 session:Annotated [Session, Depends(get_session)]):
+    new_todo = Todo(content=todo.content, user_id=current_user.id)
+
     with Session(engine) as session:
         session.add(todo)
         session.commit()
@@ -71,7 +73,8 @@ def start():
     
 # login
 @app.post("/token", response_model= Token)
-async def login(form_data:Annotated[OAuth2PasswordRequestForm, Depends()], session:Annotated[Session, Depends(get_session)]):            
+async def login(form_data:Annotated[OAuth2PasswordRequestForm, Depends()],
+                 session:Annotated[Session, Depends(get_session)]):            
     user = authenticate_user (session, form_data.username, form_data.password)
     if not user:
         raise HTTPException(status_code=401, detail="Incorrect username or password")
