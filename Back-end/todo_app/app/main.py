@@ -25,7 +25,9 @@ def mainRoute():
     return {"Status":200, "Message": "Welcome to Zia Online Mart"}
 
 @app.get("/getTodos")
-def getTodos():
+def getTodos(current_user:Annotated[User, Depends(current_user)],
+            session:Annotated =[Session, Depends(get_session)]):
+    
     with Session(engine) as session:
         statement = select(Todo)
         results = session.exec(statement)
@@ -73,9 +75,8 @@ def start():
     
 # login
 @app.post("/token", response_model= Token)
-async def login(form_data:Annotated[OAuth2PasswordRequestForm, Depends()],
-                 session:Annotated[Session, Depends(get_session)]):            
-    user = authenticate_user (session, form_data.username, form_data.password)
+async def login(form_data:Annotated[OAuth2PasswordRequestForm, Depends()], session:Annotated[Session, Depends(get_session)]):            
+    user = authenticate_user (form_data.username, form_data.password, session)
     if not user:
         raise HTTPException(status_code=401, detail="Incorrect username or password")
 
