@@ -76,7 +76,8 @@ def start():
 # login
 @app.post("/token", response_model= Token)
 async def login(form_data:Annotated[OAuth2PasswordRequestForm, Depends()], session:Annotated[Session, Depends(get_session)]):            
-    user = authenticate_user (form_data.username, form_data.password, session)
+    user = authenticate_user(form_data.username, form_data.password, session)
+    user = authenticate_user (session, form_data.username, form_data.password)
     if not user:
         raise HTTPException(status_code=401, detail="Incorrect username or password")
 
