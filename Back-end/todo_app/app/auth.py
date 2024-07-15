@@ -60,7 +60,7 @@ def current_user (token:Annotated[str, Depends(oauth_scheme)], session:Annotated
     )
 
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, SECRET_KEY, ALGORITHM)
         username: str | None = payload.get("sub")
         if username is None:
             raise credential_exception
