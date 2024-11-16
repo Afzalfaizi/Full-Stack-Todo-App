@@ -13,7 +13,7 @@ user_router = APIRouter(
 
 @user_router.get("/")
 async def read_user():
-    return {"message": "Welcome to Imtiaz Mart User Page"}
+    return {"message": "Welcome to Daily Todo App"}
 
 @user_router.post("/register")
 async def register_user(new_user:Annotated[Register_User, Depends()],

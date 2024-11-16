@@ -22,11 +22,11 @@ app.include_router(router=user.user_router)
 
 @app.get("/")
 def mainRoute():
-    return {"Status":200, "Message": "Welcome to Zia Online Mart"}
+    return {"Status":200, "Message": "Welcome to daily todo app"}
 
-@app.get("/getTodos")
+@app.get("/getTodos", response_model=list[Todo])
 def getTodos(current_user:Annotated[User, Depends(current_user)],
-            session:Annotated =[Session, Depends(get_session)]):
+            session: Session =[Session, Depends(get_session)]):
     
     with Session(engine) as session:
         statement = select(Todo)
@@ -68,10 +68,6 @@ def delete_todo(todo_id: int):
             raise HTTPException(status_code=404, detail="Todo not found") 
         session.delete(db_todo)
         return {"Status":200, "Message": "Todo deleted Successfully"}
-    
-def start():
-    create_tables()
-    uvicorn.run("app.main:app", host="127.0.0.1", port=8080, reload=True)
     
 # login
 @app.post("/token", response_model= Token)
