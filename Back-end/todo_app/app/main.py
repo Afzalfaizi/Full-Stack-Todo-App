@@ -69,14 +69,25 @@ def delete_todo(todo_id: int):
         session.delete(db_todo)
         return {"Status":200, "Message": "Todo deleted Successfully"}
     
-# login
-@app.post("/token", response_model= Token)
-async def login(form_data:Annotated[OAuth2PasswordRequestForm, Depends()], session:Annotated[Session, Depends(get_session)]):            
+# Endpoint for user login
+@app.post("/token", response_model=Token)
+async def login(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()], 
+    session: Annotated[Session, Depends(get_session)]
+):            
+    # Authenticate the user with provided username and password
     user = authenticate_user(form_data.username, form_data.password, session)
-    user = authenticate_user (session, form_data.username, form_data.password)
+    user = authenticate_user(session, form_data.username, form_data.password)
+    
+    # If authentication fails, raise an HTTP 401 error
     if not user:
         raise HTTPException(status_code=401, detail="Incorrect username or password")
 
-    expire_time = timedelta(minutes= EXPIRY_TIME)
-    access_token = create_access_token({"sub":form_data.username}, expire_time)
+    # Set the token expiry time
+    expire_time = timedelta(minutes=EXPIRY_TIME)
+    
+    # Create an access token for the authenticated user
+    access_token = create_access_token({"sub": form_data.username}, expire_time)
+    
+    # Return the access token and token type
     return Token(access_token=access_token, token_type="bearer")
