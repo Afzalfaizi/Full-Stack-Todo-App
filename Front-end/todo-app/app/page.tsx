@@ -7,7 +7,7 @@ export default function Home() {
     <main className=" max-w-5xl mx-auto mt-8">
       {/* Add Task Section */}
       <section>
-        <Modal title="Add New Task" Adding={true}>
+        <Modal title="Add New Task in Todo List" Adding={true}>
         <Button variant="default" className=" w-full bg-teal-600 px-2 py-1 text-white uppercase text-lg ">Add Task</Button>
         </Modal>
       </section>
